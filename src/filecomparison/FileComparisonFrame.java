@@ -8,7 +8,6 @@ class FileComparisonFrame extends JFrame
 {
     FileComparisonFrame()
     {
-        //add(new FileComparisonPanel());
         add(new FileComparisonPanel());
         pack();
     }
