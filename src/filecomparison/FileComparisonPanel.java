@@ -2,24 +2,33 @@ package filecomparison;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeSelectionModel;
+import java.io.File;
 
 class FileComparisonPanel  extends JPanel {
     private JTree tree;
 
     FileComparisonPanel() {
-        DefaultMutableTreeNode top =
-                new DefaultMutableTreeNode("The Java Series");
-        DefaultMutableTreeNode category = null;
-        DefaultMutableTreeNode book = null;
+        File root = new File("c:\\");
 
-        category = new DefaultMutableTreeNode("Books for Java Programmers");
-        top.add(category);
-        book = new DefaultMutableTreeNode("The Java Tutorial: A Short Course on the Basics");
-        category.add(book);
+        DefaultMutableTreeNode top = new DefaultMutableTreeNode(root.getAbsolutePath());
+        String[] fileNameList = root.list();
+        for (String filename: fileNameList) {
+            File file = new File(filename);
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(filename);
+            System.out.println(file.getName());
+            if(file.exists()) {
+                System.out.println(file.getName() + " exists");
+            } else {
+                System.out.println(file.getAbsolutePath() + " not exist");
+            }
+
+            if(file.isDirectory()) {
+                System.out.println(file.getName() + " is directory");
+                node.add(new DefaultMutableTreeNode("empty"));
+            }
+            top.add(node);
+        }
         tree = new JTree(top);
-        tree.getSelectionModel().setSelectionMode
-                (TreeSelectionModel.SINGLE_TREE_SELECTION);
         JScrollPane treeView = new JScrollPane(tree);
         add(treeView);
     }
