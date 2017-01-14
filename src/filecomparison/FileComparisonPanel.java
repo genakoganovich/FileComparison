@@ -11,19 +11,10 @@ class FileComparisonPanel  extends JPanel {
         File root = new File("c:\\");
 
         DefaultMutableTreeNode top = new DefaultMutableTreeNode(root.getAbsolutePath());
-        String[] fileNameList = root.list();
-        for (String filename: fileNameList) {
-            File file = new File(filename);
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(filename);
-            System.out.println(file.getName());
-            if(file.exists()) {
-                System.out.println(file.getName() + " exists");
-            } else {
-                System.out.println(file.getAbsolutePath() + " not exist");
-            }
-
+        File[] fileList = root.listFiles();
+        for (File file: fileList) {
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(file.getName());
             if(file.isDirectory()) {
-                System.out.println(file.getName() + " is directory");
                 node.add(new DefaultMutableTreeNode("empty"));
             }
             top.add(node);
