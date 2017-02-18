@@ -26,6 +26,7 @@ class FileExplorerPanel extends JPanel {
         tree.addTreeSelectionListener(new NodeSelectionListener());
         JScrollPane treeView = new JScrollPane(tree);
         add(treeView);
+        add(new JTextPane());
     }
     private void addNodes(File rootFile) {
         File[] fileList = rootFile.listFiles();

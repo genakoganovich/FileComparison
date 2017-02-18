@@ -7,7 +7,9 @@ class FileComparisonFrame extends JFrame
 {
     FileComparisonFrame()
     {
-        add(new FileExplorerPanel());
+        JPanel fileExplorerPanel = new FileExplorerPanel();
+        fileExplorerPanel.setLayout(new BoxLayout(fileExplorerPanel, BoxLayout.LINE_AXIS));
+        add(fileExplorerPanel);
         pack();
     }
 }
