@@ -6,9 +6,12 @@ import java.awt.event.ActionEvent;
 
 class FileComparisonFrame extends JFrame
 {
+
+    private FileExplorerPanel fileExplorerPanel;
+
     FileComparisonFrame()
     {
-        JPanel fileExplorerPanel = new FileExplorerPanel();
+        fileExplorerPanel = new FileExplorerPanel();
         fileExplorerPanel.setLayout(new BoxLayout(fileExplorerPanel, BoxLayout.LINE_AXIS));
         add(fileExplorerPanel);
 
@@ -19,6 +22,7 @@ class FileComparisonFrame extends JFrame
         testMenu.add(new TestAction("gn3160"));
         testMenu.add(new TestAction("Radon MA"));
         testMenu.add(new TestAction("Radon TauP"));
+        testMenu.add(new TestAction("All"));
 
 
         JMenuBar menuBar = new JMenuBar();
@@ -35,7 +39,7 @@ class FileComparisonFrame extends JFrame
 
         public void actionPerformed(ActionEvent event)
         {
-            System.out.println(getValue(Action.NAME) + " selected.");
+            fileExplorerPanel.addText(getValue(Action.NAME) + " selected.");
         }
     }
 }

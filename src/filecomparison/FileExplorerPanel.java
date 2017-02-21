@@ -13,6 +13,7 @@ class FileExplorerPanel extends JPanel {
     private static final String rootName = "c:\\";
     private DefaultMutableTreeNode rootNode;
     private DefaultTreeModel treeModel;
+    private JTextPane jTextPane;
 
     FileExplorerPanel() {
         File rootFile = new File(rootName);
@@ -27,7 +28,8 @@ class FileExplorerPanel extends JPanel {
         tree.setRootVisible(false);
         JScrollPane treeView = new JScrollPane(tree);
         add(treeView);
-        add(new JTextPane());
+        jTextPane = new JTextPane();
+        add(jTextPane);
     }
     private void addNodes(File rootFile) {
         File[] fileList = rootFile.listFiles();
@@ -38,6 +40,9 @@ class FileExplorerPanel extends JPanel {
             }
             rootNode.add(node);
         }
+    }
+    void addText(String text) {
+        jTextPane.setText(text);
     }
     private class NodeSelectionListener implements TreeSelectionListener {
 
