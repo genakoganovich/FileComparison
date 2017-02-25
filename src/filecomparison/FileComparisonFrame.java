@@ -16,13 +16,13 @@ class FileComparisonFrame extends JFrame
         add(fileExplorerPanel);
 
         JMenu testMenu = new JMenu("Test");
-        testMenu.add(new TestAction("Adaptive subtraction", new AdaptiveSubtractionStrategy()));
-        testMenu.add(new TestAction("Despike", new AdaptiveSubtractionStrategy()));
-        testMenu.add(new TestAction("LNA", new LNAStrategy()));
-        testMenu.add(new TestAction("gn3160", new GN3160Strategy()));
-        testMenu.add(new TestAction("Radon MA", new AdaptiveSubtractionStrategy()));
-        testMenu.add(new TestAction("Radon TauP", new AdaptiveSubtractionStrategy()));
-        testMenu.add(new TestAction("All", new AdaptiveSubtractionStrategy()));
+        testMenu.add(new TestAction("Adaptive subtraction", new AdaptiveSubtractionStrategy("Adaptive subtraction")));
+        testMenu.add(new TestAction("Despike", new AdaptiveSubtractionStrategy("Despike")));
+        testMenu.add(new TestAction("LNA", new LNAStrategy("LNA")));
+        testMenu.add(new TestAction("gn3160", new GN3160Strategy("gn3160")));
+        testMenu.add(new TestAction("Radon MA", new AdaptiveSubtractionStrategy("Radon MA")));
+        testMenu.add(new TestAction("Radon TauP", new AdaptiveSubtractionStrategy("Radon TauP")));
+        testMenu.add(new TestAction("All", new AdaptiveSubtractionStrategy("All")));
 
 
         JMenuBar menuBar = new JMenuBar();

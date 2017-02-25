@@ -48,14 +48,14 @@ class FileExplorerPanel extends JPanel {
         File[] listFile = rootNode.getFile().listFiles(new DirFilter(".sgy"));
 
         StringBuilder sb = new StringBuilder();
-
-
+        sb.append(pairDividerStrategy.toString());
+        sb.append("\n\n");
         Map<File, File> map = pairDividerStrategy.divide(listFile);
         for(Map.Entry<File, File> entry : map.entrySet()) {
             File key = entry.getKey();
             File value = entry.getValue();
             sb.append(key.getName());
-            sb.append(" is ");
+            sb.append(" does ");
             try {
                 if(!com.google.common.io.Files.equal(key, value)) {
                     sb.append("NOT ");
@@ -63,7 +63,7 @@ class FileExplorerPanel extends JPanel {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            sb.append("equals ");
+            sb.append("equal ");
             sb.append(value.getName());
             sb.append("\n");
         }
