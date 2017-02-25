@@ -55,3 +55,19 @@ class LNAStrategy extends PairDividerStrategy {
         return result;
     }
 }
+class AllStrategy extends PairDividerStrategy {
+    private PairDividerStrategy[] pairDividerStrategy;
+    private static final int SIZE = 6;
+    AllStrategy(String stategyName) {
+        super(stategyName);
+        pairDividerStrategy = new PairDividerStrategy[4];
+        pairDividerStrategy[0] = new AdaptiveSubtractionStrategy("Adaptive subtraction");
+        pairDividerStrategy[1] = new LNAStrategy("LNA");
+        pairDividerStrategy[2] = new GN3160Strategy("gn3160");
+        pairDividerStrategy[3] = new AdaptiveSubtractionStrategy("Radon MA");
+        pairDividerStrategy[4] = new AdaptiveSubtractionStrategy("Radon TauP");
+    }
+    Map<File, File> divide(File[] fileList) {
+        return null;
+    }
+}

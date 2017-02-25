@@ -12,7 +12,7 @@ import java.util.Map;
 
 class FileExplorerPanel extends JPanel {
     private JTree tree;
-    private static final String rootName = "c:\\run\\initial_test\\";
+    private static final String rootName = "\\\\192.168.22.220\\d$\\Data\\bug\\initial_test\\";
     private FileTreeNode rootNode;
     private DefaultTreeModel treeModel;
     private JTextPane jTextPane;
