@@ -1,14 +1,19 @@
 package filecomparison;
 
-import java.util.regex.*;
 import java.io.*;
 
-class DirFilter implements FilenameFilter {
-    private Pattern pattern;
-    DirFilter(String regex) {
-        pattern = Pattern.compile(regex);
+class DirFilter implements FileFilter {
+    private String extension;
+    DirFilter(String extension) {
+        this.extension = extension;
     }
-    public boolean accept(File dir, String name) {
-        return pattern.matcher(name).matches();
+
+    @Override
+    public boolean accept(File pathname) {
+        if(pathname.getName().toLowerCase().endsWith(extension)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

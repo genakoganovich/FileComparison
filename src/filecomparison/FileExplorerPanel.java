@@ -7,10 +7,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import java.io.File;
+import java.util.Map;
 
 class FileExplorerPanel extends JPanel {
     private JTree tree;
-    private static final String rootName = "c:\\";
+    private static final String rootName = "c:\\run\\initial_test\\";
     private FileTreeNode rootNode;
     private DefaultTreeModel treeModel;
     private JTextPane jTextPane;
@@ -41,8 +42,26 @@ class FileExplorerPanel extends JPanel {
             rootNode.add(node);
         }
     }
-    void addText(String text) {
-        jTextPane.setText(text);
+
+    void addText(PairDividerStrategy pairDividerStrategy) {
+        File[] listFile = rootNode.getFile().listFiles(new DirFilter(".sgy"));
+
+        StringBuilder sb = new StringBuilder();
+        for (File f: listFile) {
+            sb.append(f.getAbsoluteFile() + "\n");
+        }
+
+        Map<File, File> map = pairDividerStrategy.divide(listFile);
+        for(Map.Entry<File, File> entry : map.entrySet()) {
+            File key = entry.getKey();
+            File value = entry.getValue();
+            sb.append(key.getAbsoluteFile());
+            sb.append(" compare to ");
+            sb.append(value.getAbsoluteFile());
+            sb.append("\n");
+        }
+
+        jTextPane.setText(sb.toString());
     }
     private class NodeSelectionListener implements TreeSelectionListener {
 
@@ -63,6 +82,7 @@ class FileExplorerPanel extends JPanel {
 
             addNodes(rootFile);
             treeModel.reload();
+            jTextPane.setText(rootNode.getFile().getAbsolutePath());
         }
     }
 }
