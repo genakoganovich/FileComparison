@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 class FileExplorerPanel extends JPanel {
@@ -48,7 +49,8 @@ class FileExplorerPanel extends JPanel {
 
         StringBuilder sb = new StringBuilder();
         for (File f: listFile) {
-            sb.append(f.getAbsoluteFile() + "\n");
+            sb.append(f.getAbsoluteFile());
+            sb.append("\n");
         }
 
         Map<File, File> map = pairDividerStrategy.divide(listFile);
@@ -56,7 +58,15 @@ class FileExplorerPanel extends JPanel {
             File key = entry.getKey();
             File value = entry.getValue();
             sb.append(key.getAbsoluteFile());
-            sb.append(" compare to ");
+            sb.append(" is ");
+            try {
+                if(!com.google.common.io.Files.equal(key, value)) {
+                    sb.append(" NOT ");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            sb.append(" equal to ");
             sb.append(value.getAbsoluteFile());
             sb.append("\n");
         }
