@@ -11,13 +11,13 @@ import java.io.File;
 class FileExplorerPanel extends JPanel {
     private JTree tree;
     private static final String rootName = "c:\\";
-    private DefaultMutableTreeNode rootNode;
+    private FileTreeNode rootNode;
     private DefaultTreeModel treeModel;
     private JTextPane jTextPane;
 
     FileExplorerPanel() {
         File rootFile = new File(rootName);
-        rootNode = new DefaultMutableTreeNode(rootFile.getAbsolutePath());
+        rootNode = new FileTreeNode(rootFile);
         treeModel = new DefaultTreeModel(rootNode);
 
         addNodes(rootFile);
@@ -54,7 +54,7 @@ class FileExplorerPanel extends JPanel {
             rootNode.removeAllChildren();
 
             File rootFile = new File(name);
-            rootNode = new DefaultMutableTreeNode(rootFile.getAbsolutePath());
+            rootNode = new FileTreeNode(rootFile);
             treeModel.setRoot(rootNode);
             File parent = rootFile.getParentFile();
             if(parent != null && parent.exists()) {
