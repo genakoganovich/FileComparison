@@ -12,12 +12,14 @@ import java.util.Map;
 
 class FileExplorerPanel extends JPanel {
     private JTree tree;
-    private static final String rootName = "\\\\192.168.22.220\\d$\\Data\\bug\\initial_test\\";
+    //private static final String WINDOWS_ROOT_NAME = "\\\\192.168.22.220\\d$\\Data\\bug\\initial_test\\";
+    //private static final String LINUX_ROOT_NAME = "c:\\run\\initial_test\\";
     private FileTreeNode rootNode;
     private DefaultTreeModel treeModel;
     private JTextPane jTextPane;
 
-    FileExplorerPanel() {
+    FileExplorerPanel(String rootName) {
+
         File rootFile = new File(rootName);
         rootNode = new FileTreeNode(rootFile);
         treeModel = new DefaultTreeModel(rootNode);
@@ -43,7 +45,9 @@ class FileExplorerPanel extends JPanel {
             rootNode.add(node);
         }
     }
-
+    void setText(String text) {
+        jTextPane.setText(text);
+    }
     void addText(PairDividerStrategy pairDividerStrategy) {
         File[] listFile = rootNode.getFile().listFiles(new DirFilter(".sgy"));
 
@@ -70,25 +74,28 @@ class FileExplorerPanel extends JPanel {
 
         jTextPane.setText(sb.toString());
     }
+    void rebuildTree(String name) {
+        rootNode.removeAllChildren();
+
+        File rootFile = new File(name);
+        rootNode = new FileTreeNode(rootFile);
+        treeModel.setRoot(rootNode);
+        File parent = rootFile.getParentFile();
+        if(parent != null && parent.exists()) {
+            rootNode.add(new FileTreeNode(parent, true));
+        }
+
+        addNodes(rootFile);
+        treeModel.reload();
+
+    }
     private class NodeSelectionListener implements TreeSelectionListener {
 
         @Override
         public void valueChanged(TreeSelectionEvent e) {
             FileTreeNode node = (FileTreeNode) tree.getLastSelectedPathComponent();
             if (node == null || node.isLeaf() && !node.isParent()) return;
-            String name = node.getFile().getAbsolutePath();
-            rootNode.removeAllChildren();
-
-            File rootFile = new File(name);
-            rootNode = new FileTreeNode(rootFile);
-            treeModel.setRoot(rootNode);
-            File parent = rootFile.getParentFile();
-            if(parent != null && parent.exists()) {
-                rootNode.add(new FileTreeNode(parent, true));
-            }
-
-            addNodes(rootFile);
-            treeModel.reload();
+            rebuildTree(node.getFile().getAbsolutePath());
             jTextPane.setText(rootNode.getFile().getAbsolutePath());
         }
     }
