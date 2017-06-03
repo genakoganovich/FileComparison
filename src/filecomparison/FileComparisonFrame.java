@@ -11,14 +11,15 @@ class FileComparisonFrame extends JFrame
 
     private FileExplorerPanel fileExplorerPanel;
     private static final String WINDOWS_ROOT_NAME = "\\\\192.168.22.220\\d$\\Data\\bug\\initial_test\\";
-    private static final String LINUX_ROOT_NAME = "c:\\run\\initial_test\\";
+    //private static final String LINUX_ROOT_NAME = "c:\\run\\initial_test\\";
+    private static final String LINUX_ROOT_NAME = "/home/gena/initial_test";
     private static final String WINDOWS = "Windows";
     private static final String LINUX = "Linux";
     private Map<String, String > operatingSystemRootNames;
 
     FileComparisonFrame()
     {
-        fileExplorerPanel = new FileExplorerPanel(WINDOWS_ROOT_NAME);
+        fileExplorerPanel = new FileExplorerPanel(LINUX_ROOT_NAME);
         fileExplorerPanel.setLayout(new BoxLayout(fileExplorerPanel, BoxLayout.LINE_AXIS));
         add(fileExplorerPanel);
 

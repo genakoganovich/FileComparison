@@ -6,14 +6,15 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.EventObject;
 import java.util.Map;
 
 class FileExplorerPanel extends JPanel {
     private JTree tree;
-    //private static final String WINDOWS_ROOT_NAME = "\\\\192.168.22.220\\d$\\Data\\bug\\initial_test\\";
-    //private static final String LINUX_ROOT_NAME = "c:\\run\\initial_test\\";
     private FileTreeNode rootNode;
     private DefaultTreeModel treeModel;
     private JTextPane jTextPane;
@@ -28,7 +29,7 @@ class FileExplorerPanel extends JPanel {
 
         tree = new JTree(treeModel);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        tree.addTreeSelectionListener(new NodeSelectionListener());
+        tree.addMouseListener(new JTreeMouseAdapter());
         tree.setRootVisible(false);
         JScrollPane treeView = new JScrollPane(tree);
         add(treeView);
@@ -89,12 +90,12 @@ class FileExplorerPanel extends JPanel {
         treeModel.reload();
 
     }
-    private class NodeSelectionListener implements TreeSelectionListener {
-
+    private class JTreeMouseAdapter extends MouseAdapter {
         @Override
-        public void valueChanged(TreeSelectionEvent e) {
+        public void	mouseClicked(MouseEvent e) {
             FileTreeNode node = (FileTreeNode) tree.getLastSelectedPathComponent();
             if (node == null || node.isLeaf() && !node.isParent()) return;
+            if(e.getClickCount() < 2) return;
             rebuildTree(node.getFile().getAbsolutePath());
             jTextPane.setText(rootNode.getFile().getAbsolutePath());
         }
